@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AnimalShelterApi.Models;
 
-namespace AnimalShelterApi.Controllers
+namespace AnimalShelterApi.Controllers.v1
 {
-  [Route("api/[controller]")]
   [ApiController]
+  [Route("api/v{version:apiVersion}/[controller]")]
+  [ApiVersion("1.0")]
+  [Route("api/[controller]")]
+  
   public class AnimalsController : ControllerBase
   {
     private readonly AnimalShelterApiContext _db;
@@ -50,7 +53,7 @@ namespace AnimalShelterApi.Controllers
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId }, animal);
     }
-    // PUT: api/Animals/10
+    // PUT: api/V1/Animals/10
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Animal animal)
     {
